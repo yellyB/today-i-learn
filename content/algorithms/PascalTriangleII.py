@@ -1,13 +1,21 @@
 class Solution:
     def getRow(self, rowIndex: int) -> List[int]:
-        rows = []
-        for row in range(rowIndex+1):
-            tempRow = []
-            for i in range(0, row):
-                if i == 0:
-                    tempRow.append(1)  # 0번째에 1붙임
-                else:
-                    tempRow.append(rows[row-1][i-1] + rows[row-1][i])
-            tempRow.append(1)  # 마지막에 1붙임
-            rows.append(tempRow)
-        return rows[rowIndex]
+        rows = [1] * (rowIndex + 1)  # 한 줄 생성
+        for i in range(2, rowIndex + 1):
+            for j in range(i - 1, 0, -1):
+                rows[j] += rows[j - 1]
+        return rows
+
+    # 아니 이것도 풀었었잖아 ㅡㅡ 리트코드 제대로 안하냐
+
+    # 해당하는 한 줄만 출력하면 됨
+    # 그니까 일단 1을 rowIndex만큼 생성.
+    # Pascal's Triangle 에서 했던거처럼 차례로 갱신할거임
+
+    # row = 5이면 원래는 [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]] 이렇게 됨
+    # 그치만 [1,1,1,1,1]에서 시작하니까 먼저 [1,1]은 1밖에 없으므로 돌릴 필요 없음
+    # 인덱스1까지만 갱신 [1,2,1,1,1]  -> 원래의 [2]행인 [1,2,1]임
+    # 그 다음은 인덱스 2까지만 갱신 [1,3,3,1,1]..  다음은 3번까지만 갱신: [1,4,6,3,1] 하면 끝
+
+    # 근데 여기서 갱신을 할때 앞에꺼랑 자기 자신 더하는데 앞에서 이미 갱신되었으면 값이 달라짐
+    # 그래서 뒤부터 돌려서 앞에꺼랑 더한다
