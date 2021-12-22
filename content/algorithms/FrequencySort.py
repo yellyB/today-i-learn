@@ -1,20 +1,14 @@
 class Solution:
-    def frequencySort(self, str: str) -> str:
-        sList = list(str)
-        sDict = {}
-        answer = ''
-
-        sList.sort()  # 일단 한 번 정렬
-        for s in sList:
-            if s in sDict:
-                sDict[s] += 1
-            else:
-                sDict[s] = 1
-
-        sort = sorted(sDict, key=lambda x: sDict[x], reverse=True)  # 밸류 기준 desc
-
-        for s in sort:
-            cnt = sDict[s]
-            answer += s * cnt
-
+    def frequencySort(self, nums: List[int]) -> List[int]:
+        answer = []
+        nums.sort(reverse=True)
+        freq = collections.defaultdict(int)
+        for num in nums:
+            freq[num] += 1
+            pass
+        sort = sorted(freq.items(), key=lambda x: x[1], reverse=False)  # 밸류:밸류 기준
+        keys = sorted(freq.items(), key=lambda x: x[0], reverse=False)  # 키:밸류 기준
+        print(sort)
+        for item in sort:
+            answer.extend([item[0]] * item[1])
         return answer
