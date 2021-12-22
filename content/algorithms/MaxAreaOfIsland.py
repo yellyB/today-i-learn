@@ -22,6 +22,7 @@ class Solution:
                 if j + 1 < width:
                     right = checkIsLand(i, j + 1)
                     cnt += right
+
                 return cnt
             return cnt
 
