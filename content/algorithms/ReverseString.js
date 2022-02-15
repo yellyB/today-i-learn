@@ -12,8 +12,4 @@ var reverseString = function (s) {
     l++;
     r--;
   }
-  return s;
 };
-
-const s = ["h", "e", "l", "l", "o"];
-console.log(reverseString(s));
