@@ -23,21 +23,9 @@ var floodFill = function (image, sr, sc, newColor) {
     changeVal(i, j - 1); // 왼
   };
 
-  if (newColor === num) return image;
+  if (newColor === num) return image; // 바꿀값이 없으면 그대로 리턴
 
   changeVal(sr, sc);
 
   return image;
 };
-
-console.log(
-  floodFill(
-    [
-      [0, 0, 0],
-      [0, 1, 1],
-    ],
-    1,
-    1,
-    1
-  )
-);
