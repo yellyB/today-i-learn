@@ -1,21 +1,16 @@
 class Solution:
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        if len(nums) == 1:
-            return [nums]
-        nums.sort()
         answer = []
-        answer.append(nums[:])
-        while True:
-            i = len(nums) - 2
-            while nums[i] >= nums[i+1]:  # 뒤 숫자가 큰게 나올때까지 i--
-                i -= 1
-                if i == -1:
-                    return answer
-            j = len(nums) - 1
-            while j > i:
-                if nums[i] < nums[j]:
-                    nums[i], nums[j] = nums[j], nums[i]
-                    nums = nums[:i+1] + sorted(nums[i+1:])
-                    answer.append(nums[:])
-                    break
-                j -= 1
+        targetLen = len(nums)
+        def func(path, counter):
+            if len(path) == targetLen:
+                answer.append(path)
+            for x in counter:
+                if counter[x] > 0:  # counter가 1이상일때만, 다 썼으면 0이니까 걍 넘어갈거임
+                    # 남은갯수 하나씩 빼줘서 다음 회차로 넘김. 넘겨주고선 원복
+                    counter[x] -= 1
+                    func(path+[x], counter)
+                    counter[x] += 1
+                    
+        func([], Counter(nums))
+        return answer
