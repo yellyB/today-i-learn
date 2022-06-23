@@ -1,11 +1,16 @@
 class Solution:
     def medianSlidingWindow(self, nums: List[int], k: int) -> List[float]:
-        q = []
-        medians = []
+        res = []
+        even = k % 2 == 0
+        mid = k // 2
+        if even:  # 짝수면 두개를 뽑아야 하기 때문
+            mid -= 1
         for i in range(len(nums)):
-            q.append(nums[i])
-            if k-1<=i:
-                q.sort()
-                medians.append(sum(q[1:-1])/(k-2))
-                q.remove(nums[i-(k-1)])
-        return medians
+            if i+1 >= k:
+                lis = nums[i-k+1:i+1]
+                lis.sort()
+                if even:
+                    res.append(sum(lis[mid:mid+2])/2)
+                else:
+                    res.append(lis[mid])
+        return res
