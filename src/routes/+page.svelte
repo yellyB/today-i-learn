@@ -1,9 +1,7 @@
 <script lang="ts">
+	import 'prismjs/themes/prism.css';
 	export let data;
 	console.log(data);
-	// import '../app.postcss';
-	// import './prism.css';
-	// import Header from './header.svelte';
 </script>
 
 <section>

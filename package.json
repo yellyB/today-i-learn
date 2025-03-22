@@ -55,5 +55,8 @@
 	},
 	"keywords": [
 		"svelte"
-	]
+	],
+	"dependencies": {
+		"prismjs": "^1.30.0"
+	}
 }
