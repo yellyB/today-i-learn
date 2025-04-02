@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
@@ -29,9 +31,15 @@ jobs:
         run: npm run build
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-artifact@v4  # ✅ v4로 변경
         with:
-          path: './build' 
+          name: github-pages
+          path: './build'  # SvelteKit의 빌드 폴더
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v2  # GitHub Pages용 업로드
+        with:
+          path: './build'
 
       - name: Deploy to GitHub Pages
         id: deployment
