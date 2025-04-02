@@ -37,7 +37,7 @@ jobs:
           path: './build'  # SvelteKit의 빌드 폴더
 
       - name: Upload pages artifact
-        uses: actions/upload-pages-artifact@v2  # GitHub Pages용 업로드
+        uses: actions/upload-pages-artifact@v3  # GitHub Pages용 업로드
         with:
           path: './build'
 
