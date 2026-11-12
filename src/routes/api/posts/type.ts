@@ -1,6 +1,1 @@
-export type Post = {
-	key: number;
-	title: string;
-	date: string;
-	slug?: string;
-};
+export type { Post } from '$lib/categories.js';
