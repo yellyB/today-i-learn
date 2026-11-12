@@ -1,4 +1,5 @@
 import type { Component } from 'svelte';
+import gitDates from 'virtual:content-dates';
 
 import { categories, type Category, type Post } from './categories.js';
 
@@ -32,16 +33,18 @@ function splitContentPath(path: string): { category: Category | null; filename: 
 	return null;
 }
 
+const today = new Date().toISOString().slice(0, 10);
+
 const entries = Object.entries(modules).flatMap(([path, mod]) => {
 	const split = splitContentPath(path);
-	if (!split || !mod.metadata?.title || !mod.metadata.date) return [];
+	if (!split) return [];
 
 	const { category, filename } = split;
 
 	const slug = toSlug(filename);
 	const post: Post = {
-		title: mod.metadata.title,
-		date: mod.metadata.date,
+		title: mod.metadata?.title ?? filename.replace(/\.md$/, ''),
+		date: mod.metadata?.date ?? gitDates[path] ?? today,
 		category,
 		slug,
 		href: category ? `/${category}/${slug}` : `/${slug}`
