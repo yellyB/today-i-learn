@@ -1,0 +1,29 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
+        def delete(root):
+            if not root: return None
+            root.left = delete(root.left)
+            root.right = delete(root.right)
+            
+            # 현 노드 삭제해야 한다면? 각각 띠어서 저장해줌
+            if root.val in to_delete:
+                if root.left: answer.append(root.left)
+                if root.right: answer.append(root.right)
+                return None
+            return root
+        
+        answer = []
+        
+        if root.val not in to_delete: answer.append(root)
+        delete(root)
+        
+        return answer
+    
+    # 바깥에서 answer에 삭제안한 노드들 담을거임
+    # 삭제할 노드 만난다면 왼, 오 는 따로 떼어서 answer에 담아줌
