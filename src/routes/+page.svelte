@@ -1,6 +1,6 @@
 <script lang="ts">
 	import 'prismjs/themes/prism.css';
-	import { categories, categoryLabels, type Category, type Post } from '$lib/categories.js';
+	import { categories, categoryLabels, postHref, type Category, type Post } from '$lib/content.js';
 
 	let { data } = $props();
 	const posts: Post[] = data.posts;
@@ -26,7 +26,7 @@
 		{#each filtered as post}
 			<li>
 				{#if filter === 'all' && post.category}<span class="tag">[{categoryLabels[post.category]}]</span>{/if}
-				<a href={post.href}>{post.title}</a>
+				<a href={postHref(post)}>{post.title}</a>
 				<span class="date">{post.date}</span>
 			</li>
 		{/each}

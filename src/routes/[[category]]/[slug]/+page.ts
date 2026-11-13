@@ -1,12 +1,15 @@
 import { error } from '@sveltejs/kit';
-import { findPost } from '$lib/posts.js';
+import type { Component } from 'svelte';
+import { parseContentPath } from '$lib/content.js';
 
-export async function load({ params }) {
-	const found = findPost(params.category, params.slug);
-	if (!found) throw error(404, `Could not find ${params.category ?? ''}/${params.slug}`);
+const loaders = import.meta.glob<Component>(['/content/*.md', '/content/*/*.md'], { import: 'default' });
 
-	return {
-		content: found.component,
-		meta: found.post
-	};
+export async function load({ params, data }) {
+	const path = Object.keys(loaders).find((key) => {
+		const parsed = parseContentPath(key);
+		return parsed?.category === (params.category ?? null) && parsed.slug === params.slug;
+	});
+	if (!path) throw error(404, `Could not find ${params.category ?? ''}/${params.slug}`);
+
+	return { ...data, content: await loaders[path]() };
 }
