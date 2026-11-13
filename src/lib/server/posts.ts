@@ -1,17 +1,16 @@
 import gitDates from 'virtual:content-dates';
 import { parseContentPath, type Post } from '$lib/content.js';
 
-type Metadata = { title?: string; date?: string } | undefined;
+type Metadata = { title?: string; date?: string };
 
-const metadataByPath = import.meta.glob<Metadata>(['/content/*.md', '/content/*/*.md'], {
-	eager: true,
-	import: 'metadata'
+const modulesByPath = import.meta.glob<{ metadata?: Metadata }>(['/content/*.md', '/content/*/*.md'], {
+	eager: true
 });
 
 const today = new Date().toISOString().slice(0, 10);
 
-const posts: Post[] = Object.entries(metadataByPath)
-	.flatMap(([path, metadata]) => {
+const posts: Post[] = Object.entries(modulesByPath)
+	.flatMap(([path, { metadata }]) => {
 		const parsed = parseContentPath(path);
 		if (!parsed) return [];
 
