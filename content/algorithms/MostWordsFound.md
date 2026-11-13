@@ -1,0 +1,14 @@
+---
+date: '2022-01-16'
+---
+
+```python
+class Solution:
+    def mostWordsFound(self, sentences: List[str]) -> int:
+        maxCnt = 0
+        for sen in sentences:
+            cnt = len(sen.split(' '))
+            maxCnt = max(maxCnt, cnt)
+            
+        return maxCnt
+```
